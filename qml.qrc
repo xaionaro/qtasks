@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>TasksPage.qml</file>
+        <file>ConfigurationPage.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>TrackerItem.ui.qml</file>
+        <file>DateTimePicker.qml</file>
+        <file>FindTaskForm.qml</file>
+        <file>CreateTaskForm.qml</file>
+        <file>TasksListView.qml</file>
+        <file>ActivityLogPage.qml</file>
+        <file>NotesPage.qml</file>
+    </qresource>
+</RCC>
