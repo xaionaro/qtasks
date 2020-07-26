@@ -7,6 +7,7 @@ Page {
     objectName: "createTaskForm"
 
     signal createTask(string title, string summary)
+    onCreateTask: backend.taskCreate(title, summary)
 
     ColumnLayout {
         id: columnLayout
@@ -16,6 +17,8 @@ Page {
             id: titleField
             Layout.fillWidth: true
             focus: true
+            selectByMouse: true
+            persistentSelection: true
             placeholderText: qsTr("Title")
             onAccepted: {
                 createButton.clicked()
@@ -27,8 +30,11 @@ Page {
             Layout.fillWidth: true
             Layout.fillHeight: true
             placeholderText: qsTr("Summary...")
+            selectByMouse: true
+            persistentSelection: true
             background: Rectangle {
-                border.color: "#21be2b"
+                color: palette.base
+                border.color: parent.activeFocus ? palette.highlight : palette.alternateBase
             }
         }
 
@@ -68,6 +74,6 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:1;anchors_height:100;anchors_width:100}
+    D{i:0;autoSize:true;height:480;width:640}
 }
 ##^##*/

@@ -11,6 +11,7 @@ Rectangle {
     implicitHeight: 600
 
     property var title: qsTr("configuration")
+    color: palette.base
 
     Label {
         id: itsLabel

@@ -5,6 +5,10 @@ import QtQuick.Layouts 1.3
 Page {
     id: findTaskForm
     objectName: "findTaskForm"
+    background: Rectangle{
+        anchors.fill: parent
+        color: palette.base
+    }
 
     signal select(int index, string taskID, QtObject item)
     onSelect: backend.findTaskSelect(index, taskID, item)
@@ -20,6 +24,8 @@ Page {
             id: filterField
             Layout.fillWidth: true
             Layout.fillHeight: false
+            selectByMouse: true
+            persistentSelection: true
             placeholderText: qsTr("Filter")
             onTextChanged: findTaskForm.updateFilter(filterField.text)
         }
@@ -43,6 +49,6 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:1;anchors_height:100;anchors_width:100}
+    D{i:0;autoSize:true;height:480;width:640}D{i:2;anchors_height:100;anchors_width:100}
 }
 ##^##*/

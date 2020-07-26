@@ -11,5 +11,6 @@
         <file>TasksListView.qml</file>
         <file>ActivityLogPage.qml</file>
         <file>NotesPage.qml</file>
+        <file>XCalendar.qml</file>
     </qresource>
 </RCC>

@@ -6,6 +6,7 @@ Rectangle {
     id: tasksPage
     objectName: "tasksPage"
     property var title: qsTr("tasks")
+    color: palette.base
 
     signal logOnce(int index, string taskID, Item item, string since, string until, string comment)
     signal setComment(int index, string taskID, Item item, string comment)
@@ -178,18 +179,22 @@ Rectangle {
                     id: commentTextArea
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
+                    selectByMouse: true
+                    persistentSelection: true
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     placeholderText: qsTr("Comment")
                     background: Rectangle {
-                        border.color: "#21be2b"
+                        color: parent.activeFocus ? palette.base : "transparent"
+                        border.color: parent.activeFocus ? palette.highlight : palette.alternateBase
                     }
                     onFocusChanged: {
-                        commentControlsLayout.visible = focus
-                        logOnceDetailsLayout.visible = !focus
-                        logOnceButton.visible = !focus
+                        commentControlsLayout.visible = activeFocus
+                        logOnceDetailsLayout.visible = !activeFocus
+                        logOnceButton.visible = !activeFocus
                     }
                     Keys.onEscapePressed: {
                         focus = false
+                        console.log(event)
                     }
                 }
             }

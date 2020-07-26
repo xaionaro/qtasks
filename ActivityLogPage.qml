@@ -1,12 +1,12 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 1.4
 
 Rectangle {
     id: activityLogPage
     objectName: "activityLogPage"
     property var title: qsTr("activity log")
+    color: palette.base
 
     signal dateRangeChange(string since, string until)
     signal select(int index, string taskID, QtObject item)
@@ -16,13 +16,13 @@ Rectangle {
     onSelect: backend.activityLogSelect(index, taskID, item)
     onOpenInBrowser: backend.activityLogOpenInBrowser(index, taskID, item)
 
-    property var backgroundColorInactive0: "#EEEEEE"
-    property var backgroundColorInactive1: "#FFFFFF"
-    property var foregroundColorInactive: "#000000"
-    property var backgroundColorActive: "#00FF00"
-    property var foregroundColorActive: "#000000"
-    property var backgroundColorContext: "#80FF80"
-    property var foregroundColorContext: "#000000"
+    property var backgroundColorInactive0: palette.base
+    property var backgroundColorInactive1: palette.alternateBase
+    property var foregroundColorInactive: palette.text
+    property var backgroundColorActive: palette.highlight
+    property var foregroundColorActive: palette.highlightedText
+    property var backgroundColorContext: palette.toolTipBase
+    property var foregroundColorContext: palette.toolTipText
 
     ListModel {
         id: listModel
@@ -47,7 +47,8 @@ Rectangle {
         RowLayout {
             id: rowLayout
             Layout.fillWidth: true
-            Calendar {
+
+            XCalendar {
                 id: sinceDate
                 onSelectedDateChanged: {
                     if (untilDate.selectedDate < sinceDate.selectedDate) {
@@ -56,7 +57,7 @@ Rectangle {
                     activityLogPage.dateRangeChange(sinceDate.selectedDate, untilDate.selectedDate)
                 }
             }
-            Calendar {
+            XCalendar {
                 id: untilDate
                 Layout.alignment: Qt.AlignRight
                 onSelectedDateChanged: {
@@ -78,7 +79,7 @@ Rectangle {
                     id: itemDelegate
                     property var backgroundColorDefault: index % 2 == 0 ? activityLogPage.backgroundColorInactive0 : activityLogPage.backgroundColorInactive1
                     property var backgroundColor: contextMenu.opened ? activityLogPage.backgroundColorContext : backgroundColorDefault
-                    property var foregroundColorDefault: activityLogPage.foregroundColorInactive
+                    property var foregroundColorDefault: listView.currentIndex == index ? activityLogPage.foregroundColorActive : activityLogPage.foregroundColorInactive
                     property var foregroundColor: contextMenu.opened ? activityLogPage.foregroundColorContext : foregroundColorDefault
 
 
@@ -90,6 +91,7 @@ Rectangle {
                     Rectangle {
                         anchors.fill: parent
                         color: listView.currentIndex == index ? activityLogPage.backgroundColorActive : itemDelegate.backgroundColor
+                        border.color: listView.currentIndex == index ? activityLogPage.backgroundColorActive : activityLogPage.backgroundColorInactive1
                     }
                     Column {
                         anchors.right: parent.right

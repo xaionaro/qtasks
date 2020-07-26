@@ -26,6 +26,9 @@ public slots:
     };
     static void stopContinuousTimeTracking() {};
 
+    static void taskCreate(QString title, QString summary) {
+        (void)title; (void)summary;
+    }
     static void taskSelect(int index, QString taskID, QObject *item) {
         (void)index; (void)taskID; (void)item;
     }

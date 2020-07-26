@@ -3,11 +3,14 @@ import QtQuick.Controls 2.14
 import QtQuick.Layouts 1.3
 
 ApplicationWindow {
+
     id: window
     visible: true
     width: 640
     height: 480
     title: qsTr("Stack")
+
+    property var toolBarActiveBackgroundOpacity: 0.5
 
     Shortcut {
         sequence: StandardKey.Quit
@@ -72,8 +75,8 @@ ApplicationWindow {
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("tasks [F1]")
                 background: Rectangle {
-                    opacity: mainArea.currentIndex == 0 ? 0.3 : 0
-                    color: "#00FF00"
+                    opacity: mainArea.currentIndex == 0 ? window.toolBarActiveBackgroundOpacity : 0
+                    color: palette.highlight
                 }
                 onClicked: {
                     mainArea.currentIndex = 0
@@ -89,8 +92,8 @@ ApplicationWindow {
                 ToolTip.text: qsTr("activity log [F2]")
                 font.pixelSize: Qt.application.font.pixelSize * 1.6
                 background: Rectangle {
-                    opacity: mainArea.currentIndex == 1 ? 0.3 : 0
-                    color: "#00FF00"
+                    opacity: mainArea.currentIndex == 1 ? window.toolBarActiveBackgroundOpacity : 0
+                    color: palette.highlight
                 }
                 onClicked: {
                     mainArea.currentIndex = 1
@@ -106,8 +109,8 @@ ApplicationWindow {
                 ToolTip.text: qsTr("notes [F3]")
                 font.pixelSize: Qt.application.font.pixelSize * 1.6
                 background: Rectangle {
-                    opacity: mainArea.currentIndex == 2 ? 0.3 : 0
-                    color: "#00FF00"
+                    opacity: mainArea.currentIndex == 2 ? window.toolBarActiveBackgroundOpacity : 0
+                    color: palette.highlight
                 }
                 onClicked: {
                     mainArea.currentIndex = 2
@@ -123,8 +126,8 @@ ApplicationWindow {
                 ToolTip.text: qsTr("configuration [F4]")
                 font.pixelSize: Qt.application.font.pixelSize * 1.6
                 background: Rectangle {
-                    opacity: mainArea.currentIndex == 3 ? 0.3 : 0
-                    color: "#00FF00"
+                    opacity: mainArea.currentIndex == 3 ? window.toolBarActiveBackgroundOpacity : 0
+                    color: palette.highlight
                 }
                 onClicked: {
                     mainArea.currentIndex = 3
@@ -212,6 +215,7 @@ ApplicationWindow {
     StackView {
         id: stackView
         Shortcut {
+            enabled: stackView.depth > 1
             sequence: "Escape"
             onActivated: {
                 stackView.pop()
@@ -223,6 +227,8 @@ ApplicationWindow {
         initialItem: SwipeView {
             id: mainArea
             anchors.fill: parent
+            interactive: false
+
             Item {
                 TasksPage {
                     id: tasksPage

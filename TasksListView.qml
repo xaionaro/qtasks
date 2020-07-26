@@ -39,13 +39,13 @@ GridLayout {
     property alias currentIndex: listView.currentIndex
     property var currentTaskID: listView.currentIndex >= 0 ? taskModel.get(listView.currentIndex).taskID : null
 
-    property var backgroundColorInactive0: "#EEEEEE"
-    property var backgroundColorInactive1: "#FFFFFF"
-    property var foregroundColorInactive: "#000000"
-    property var backgroundColorActive: "#00FF00"
-    property var foregroundColorActive: "#000000"
-    property var backgroundColorContext: "#80FF80"
-    property var foregroundColorContext: "#000000"
+    property var backgroundColorInactive0: palette.base
+    property var backgroundColorInactive1: palette.alternateBase
+    property var foregroundColorInactive: palette.text
+    property var backgroundColorActive: palette.highlight
+    property var foregroundColorActive: palette.highlightedText
+    property var backgroundColorContext: palette.toolTipBase
+    property var foregroundColorContext: palette.toolTipText
     property alias listView: listView
 
     function selectDefault() {
@@ -74,7 +74,7 @@ GridLayout {
                 id: itemDelegate
                 property var backgroundColorDefault: index % 2 == 0 ? layout.backgroundColorInactive0 : layout.backgroundColorInactive1
                 property var backgroundColor: contextMenu.opened ? layout.backgroundColorContext : backgroundColorDefault
-                property var foregroundColorDefault: layout.foregroundColorInactive
+                property var foregroundColorDefault: listView.currentIndex == index ? layout.foregroundColorActive : layout.foregroundColorInactive
                 property var foregroundColor: contextMenu.opened ? layout.foregroundColorContext : foregroundColorDefault
 
 
@@ -86,6 +86,7 @@ GridLayout {
                 Rectangle {
                     anchors.fill: parent
                     color: listView.currentIndex == index ? layout.backgroundColorActive : itemDelegate.backgroundColor
+                    border.color: listView.currentIndex == index ? layout.backgroundColorActive : layout.backgroundColorInactive1
                 }
                 Column {
                     Text {
